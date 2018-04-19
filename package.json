@@ -1,0 +1,45 @@
+{
+  "name": "profile-management-server",
+  "version": "1.0.0",
+  "description": "The app developed with React technology main function is provide a point of access to the Contest Management System",
+  "main": "index.js",
+  "babel": {
+    "presets": [
+      "env",
+      "stage-0"
+    ],
+    "plugins": [
+      "transform-es2015-modules-commonjs"
+    ]
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "babel-node start-server.js",
+    "client": "babel-node start-client.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joelgtsantos/profile-management.git"
+  },
+  "author": "joelgtsantos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joelgtsantos/profile-management/issues"
+  },
+  "homepage": "https://github.com/joelgtsantos/profile-management#readme",
+  "devDependencies": {
+    "babel-cli": "6.26.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "6.26.0",
+    "babel-preset-env": "1.6.1",
+    "babel-preset-react": "6.24.1",
+    "babel-preset-stage-0": "6.24.1"
+  },
+  "dependencies": {
+    "concurrently": "3.5.1",
+    "express": "4.16.3",
+    "isomorphic-fetch": "^2.2.1",
+    "morgan": "1.9.0",
+    "urijs": "1.19.1"
+  }
+}
