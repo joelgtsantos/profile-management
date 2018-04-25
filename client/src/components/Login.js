@@ -23,7 +23,7 @@ class Login extends Component {
       locationState && locationState.from && locationState.from.pathname
     );
     
-    return pathname || '/albums';
+    return pathname || '/profile';
   };
 
   render() {
