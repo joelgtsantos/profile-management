@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-
 import { Redirect } from 'react-router-dom';
-
 import { client } from '../Client';
+import SocialButton from './LoginButton';
+
+
 
 class Login extends Component {
   state = {
@@ -40,7 +41,7 @@ class Login extends Component {
               style={{ textAlign: 'center' }}
             >
               <h2 className='ui green header'>
-                Fullstack Music
+                
               </h2>
               {
                 this.state.loginInProgress ? (
@@ -52,6 +53,14 @@ class Login extends Component {
                   >
                     Login
                   </div>
+                  <SocialButton
+                    provider='facebook'
+                    appId='YOUR_APP_ID'
+                    onLoginSuccess={handleSocialLogin}
+                    onLoginFailure={handleSocialLoginFailure}
+                  >
+                    Login with Facebook
+                  </SocialButton>
                 )
               }
             </div>
