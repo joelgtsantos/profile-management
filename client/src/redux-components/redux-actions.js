@@ -1,3 +1,5 @@
+import { client } from '../Client';
+
 export const LOGIN_USER_REQUEST = 'LOGIN_USER_REQUEST';
 function loginUserRequest () {
   return {type: LOGIN_USER_REQUEST};
@@ -18,18 +20,25 @@ export const SAVE_USER_SUCCESS = 'SAVE_USER_SUCCESS';
 
 
 
-export function loginPeople () {
+export function login () {
   return function (dispatch) {
     dispatch(loginUserRequest())
     return delay(2000).then(() => {
-      apiClient.loadPeople().then((people) => {
-      dispatch(fetchPeopleSuccess(people))
+      client.login().then((user) => {
+      //dispatch(loginUserRequest(people))
+      console.log(user);
     })
     });
   }
 }
 
-export function savePeople (people) {
+
+const delay = (ms) => new Promise(resolve =>
+  setTimeout(resolve, ms)
+);
+
+
+/*export function savePeople (people) {
   return function (dispatch) {
     dispatch(savePeopleRequest())
     apiClient.savePeople(people)
@@ -37,10 +46,6 @@ export function savePeople (people) {
       .catch((err) => { dispatch(savePeopleFailure(err)) })
   }
 }
-
-const delay = (ms) => new Promise(resolve =>
-  setTimeout(resolve, ms)
-);
 
 const apiClient = {
   loadPeople: function () {
@@ -67,4 +72,4 @@ const apiClient = {
   },
 
   count: 1
-}
+}*/
