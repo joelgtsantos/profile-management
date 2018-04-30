@@ -1,10 +1,12 @@
 import express from 'express';
 import morgan from 'morgan';
+import bodyParser from 'body-parser';
 
 import CmsClient from './CmsClient';
 
 const app = express();
 
+app.use(bodyParser.json()); // for parsing application/json
 app.set('port', (process.env.API_PORT || 3001));
 
 if (process.env.NODE_ENV !== 'TEST') {
@@ -12,7 +14,7 @@ if (process.env.NODE_ENV !== 'TEST') {
 }
 
 // A fake API token our server validates
-export const API_TOKEN = 'D6W69PRgCoDKgHZGJmRUNA';
+export const API_TOKEN = 'ya29.GlytBbOjWqYJYm7IsSbAw_EJP9F-xYNqoyEE7fgGF5rr8Po9-1D6tJQvJWfsiMVHFtpvius-v_S7ixrZm5_dCGCDN248Fu57OGFsmnwEH1gzJItf3B7BZtsLKCNeCA';
 
 
 const extractToken = (req) => (
@@ -59,7 +61,7 @@ app.get('/api/check_token', (req, res) => {
 app.get('/api/albums', authenticatedRoute, (req, res) => {
   const albumIds = req.query.ids.split(',');
 
-  SpotifyClient.getAlbums(albumIds).then((albums) => (
+  CmsClient.getAlbums(albumIds).then((albums) => (
     res.json(albums)
   )).catch((error) => (
     res.status(500).json({
@@ -72,14 +74,18 @@ app.get('/api/albums', authenticatedRoute, (req, res) => {
 
 // Make things more noticeable in the UI by introducing a fake delay
 // to logins
-const FAKE_DELAY = 500; // ms
 app.post('/api/login', (req, res) => {
-  setTimeout(() => (
-    res.json({
-      success: true,
-      token: API_TOKEN,
-    })
-  ), FAKE_DELAY);
+  const user = req.body;
+  CmsClient.login(user).then((usr) => (
+      res.json(usr)
+    )).catch((error) => (
+      res.status(500).json({
+        success: false,
+        message: 'There was an error when interfacing with CMS',
+        error: error,
+      })
+    ));
+  //), FAKE_DELAY);*/
 });
 
 export default app;
