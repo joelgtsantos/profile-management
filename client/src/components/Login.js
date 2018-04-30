@@ -6,17 +6,6 @@ import SocialButton from './LoginButton';
 
 
 class Login extends Component {
-  state = {
-    loginInProgress: false,
-    shouldRedirect: false,
-  };
-
-  performLogin = () => {
-    this.setState({ loginInProgress: true });
-    client.login().then(() => (
-      this.setState({ shouldRedirect: true })
-    ));
-  };
 
   redirectPath = () => {
     const locationState = this.props.location.state;
@@ -27,9 +16,8 @@ class Login extends Component {
     return pathname || '/profile';
   };
 
-  handleSocialLogin = (user) => {
-    console.log(user);
-     this.props.onSubmit();
+  handleSocialLogin = (userApi) => {
+     this.props.onSubmit(userApi);
     /*
       t {_provider: "google", _profile: {…}, _token: {…}}
         _profile
@@ -42,17 +30,6 @@ class Login extends Component {
         :
         {accessToken: "ya29.GlupBfgK5kEey8tdCicMy2pzyMNjYCFmCclEKBPhBLaM0…MGz_9Td4qyuczKpDo0XqD62kH4AVllRSPRzlgz9-o7_EUdVFx", idToken: "eyJhbGciOiJSUzI1NiIsImtpZCI6ImFmZmM2MjkwN2E0NDYxOD…Qd-9Iexn6e_aKFiY-6B_Odrh3ME6YyPgIQ_-3p3FeHOOyiCLg", scope: "https://www.googleapis.com/auth/userinfo.email htt….googleapis.com/auth/plus.me openid email profile", expiresIn: 3600, firstIssued_at: 1524771790103, …}
         profile
-        :
-        (...)
-        provider
-        :
-        (...)
-        token
-        :
-        (...)
-        __proto__
-        :
-        Object
     */
   };
 
@@ -61,7 +38,7 @@ class Login extends Component {
   };
 
   render() {
-    if (this.state.shouldRedirect) {
+    if (this.props.shouldRedirect) {
       return (
         <Redirect to={this.redirectPath()} />
       );
@@ -77,7 +54,7 @@ class Login extends Component {
                 
               </h2>
               {
-                this.state.loginInProgress ? (
+                this.props.loginInProgress ? (
                   <div className='ui active centered inline loader' />
                 ) : (
                   <SocialButton

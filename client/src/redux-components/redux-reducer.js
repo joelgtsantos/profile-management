@@ -6,11 +6,11 @@ import {
 const initialState = {
   isLoading: false,
   saveStatus: 'READY',
+  loginInProgress: false,
+  shouldRedirect: false,
   user: {
     name: '',
-    email: '',
-    password: '',
-    country: null
+    email: ''
   },
 };
 
@@ -18,11 +18,12 @@ export function reducer (state = initialState, action) {
   switch (action.type) {
     case LOGIN_USER_REQUEST:
       return Object.assign({}, state, {
-        isLoading: true
+        loginInProgress: true
       });
     case LOGIN_USER_SUCCESS:
       return Object.assign({}, state, {
-        isLoading: false
+        shouldRedirect: true,
+        user: action.user
       });
     default:
       return state;

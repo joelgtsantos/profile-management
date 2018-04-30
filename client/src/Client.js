@@ -2,7 +2,7 @@
 /* eslint-disable import/prefer-default-export */
 import fetch from 'isomorphic-fetch';
 
-const LOCAL_STORAGE_KEY = 'fsr-cms-fake-auth';
+const LOCAL_STORAGE_KEY = 'fsr-cms-auth';
 
 // There are risks with using localStorage for API tokens in a production
 // application. You open yourself up to XSS attacks. If malicious
@@ -44,8 +44,10 @@ class Client {
 
   setToken(token) {
     this.token = token;
+    console.log(token);
 
     if (this.useLocalStorage) {
+      console.log("local localStorage");
       localStorage.setItem(LOCAL_STORAGE_KEY, token);
     }
   }
@@ -89,15 +91,16 @@ class Client {
       .then(this.parseJson);
   }
 
-  login() {
+  login(user) {
     return fetch('/api/login', {
       method: 'post',
       headers: {
-        accept: 'application/json',
+        'Content-Type': 'application/json'
       },
+      body: JSON.stringify(user),
     }).then(this.checkStatus)
       .then(this.parseJson)
-      .then((json) => console.log(json));
+      .then((json) => this.setToken(user.token));
   }
 
   logout() {
@@ -108,7 +111,9 @@ class Client {
     if (response.status >= 200 && response.status < 300) {
       return response;
     } else {
+      console.log(response.statusText);
       const error = {};
+      //const error = new Error(`HTTP Error ${response.statusText}`);
       error.status = response.statusText;
       error.response = response;
       console.log(error);

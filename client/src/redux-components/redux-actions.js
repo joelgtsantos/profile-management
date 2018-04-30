@@ -6,8 +6,8 @@ function loginUserRequest () {
 }
 
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
-function loginUserSuccess (people) {
-  return {type: LOGIN_USER_SUCCESS, people};
+function loginUserSuccess (user) {
+  return {type: LOGIN_USER_SUCCESS, user};
 }
 
 export const SAVE_USER_REQUEST = 'SAVE_USER_REQUEST';
@@ -19,16 +19,24 @@ export const SAVE_USER_FAILURE = 'SAVE_USER_FAILURE';
 export const SAVE_USER_SUCCESS = 'SAVE_USER_SUCCESS';
 
 
-
-export function login () {
-  return function (dispatch) {
+export function login (user) {
+  return function (dispatch) { 
+      //console.log(user);
+      const newUser = {
+        firstName: user._profile.name, 
+        lastName: user._profile.lastName,
+        username: user._profile.email.replace(/[^\w\s!?]/g,''),
+        email: user._profile.email,
+        timezone: '',
+        preferredLanguages: '',
+        token: user._token.accessToken,
+      };
+    
     dispatch(loginUserRequest())
-    return delay(2000).then(() => {
-      client.login().then((user) => {
-      //dispatch(loginUserRequest(people))
-      console.log(user);
-    })
-    });
+      client.login(newUser)
+      .then((resp) => { dispatch(loginUserSuccess(resp)) }) //
+      //.catch((err) => { dispatch(savePeopleFailure(err)) })
+    //})
   }
 }
 
@@ -36,40 +44,3 @@ export function login () {
 const delay = (ms) => new Promise(resolve =>
   setTimeout(resolve, ms)
 );
-
-
-/*export function savePeople (people) {
-  return function (dispatch) {
-    dispatch(savePeopleRequest())
-    apiClient.savePeople(people)
-      .then((resp) => { dispatch(savePeopleSuccess(people)) })
-      .catch((err) => { dispatch(savePeopleFailure(err)) })
-  }
-}
-
-const apiClient = {
-  loadPeople: function () {
-    return {
-      then: function (cb) {
-        setTimeout( () => {
-          cb(JSON.parse(localStorage.people || '[]'))
-        }, 1000);
-      }
-    }
-  },
-
-  savePeople: function (people) {
-    const success = !!(this.count++ % 2);
-
-    return new Promise(function (resolve, reject) {
-      setTimeout( () => {
-        if (!success) return reject({success});
-
-        localStorage.people = JSON.stringify(people);
-        resolve({success});
-      }, 1000);
-    })
-  },
-
-  count: 1
-}*/

@@ -42,16 +42,17 @@ function mapStateToProps(state){
   return {
     isLoading: state.isLoading,
     fields: state.person,
-    people: state.people,
+    user: state.user,
     saveStatus: state.saveStatus,
+    loginInProgress: state.loginInProgress,
+    shouldRedirect: state.shouldRedirect,
   };
 }
 
 function mapDispatchToProps(dispatch){
   return {
-    onSubmit: (people) => {
-      console.log('asdfadsfadsf');
-      dispatch(login());
+    onSubmit: (user) => {
+      dispatch(login(user));
     }
   };
 }
