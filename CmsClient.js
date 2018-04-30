@@ -13,11 +13,11 @@ function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;
   } else {
+    console.log('Error communicating with CMS:');
+    console.log(error);
     const error = new Error(`HTTP Error ${response.statusText}`);
     error.status = response.statusText;
     error.response = response;
-    console.log('Error communicating with CMS:');
-    console.log(error);
     throw error;
   }
 }
@@ -52,6 +52,19 @@ const CmsClient = {
     }
   },
 
+  _post(url, body) {
+    console.log(body);
+    console.log(url);
+    return fetch(url, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+       body: JSON.stringify(body),
+    }).then(checkStatus)
+      .then(parseJson)
+  },
+
   _getApiToken() {
     return fetch('https://accounts.spotify.com/api/token', {
       method: 'post',
@@ -70,6 +83,11 @@ const CmsClient = {
     return this._get(
       CMS_BASE_URI + '/albums/' + albumId
     ).then((data) => data);
+  },
+
+  login(user) {
+    const url = CMS_BASE_URI + '/register';
+    return this._post(url, user).then((data) => data);
   },
 }
 
