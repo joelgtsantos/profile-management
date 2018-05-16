@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { client }  from '../Client';
-//import Form from 'formsy-react-2';
 import InputFile from './InputFile';
 import '../style/Profile.css';
 import {
@@ -14,16 +13,18 @@ class Profile extends Component {
             study: '',
             work: '',
             wantWork: false,
-            fileName: '',
-            file: null,
+            cv: '',
+            name: null,
         }
     }
      
     submit = (data) => {
-        console.log(this.props.user);
-
         const person = data;
         person.id = this.props.user.id;
+        //const cv = {fileName: this.state.fields.fileName, file: this.state.fields.file};
+        person.cv = this.state.fields.cv;
+        person.name = this.state.fields.name;
+        console.log(person);
         this.props.onSubmit(person);
         //this.form.reset();//.form.reset();
     };
@@ -38,11 +39,10 @@ class Profile extends Component {
 
     onInputFileChange = ({ fileName, file }) => {
         const fields = this.state.fields;
-        fields['fileName'] = fileName;
-        fields['file'] = file;
+        fields['cv'] = file;
+        fields['name'] = fileName;
 
         this.setState({fields});
-
         console.log(this.state);
     };
 

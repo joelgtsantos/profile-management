@@ -8,8 +8,7 @@ const initialState = {
   saveStatus: 'READY',
   loginInProgress: false,
   shouldRedirect: false,
-  user: {
-  },
+  user: {},
   profile: {
     name: '',
     email: ''

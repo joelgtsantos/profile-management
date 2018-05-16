@@ -29,18 +29,28 @@ export function login (user) {
   return function (dispatch) { 
       //console.log(user);
       const newUser = {
+        id: 1,
         firstName: user._profile.name, 
         lastName: user._profile.lastName,
         username: user._profile.email.replace(/[^\w\s!?]/g,''),
-        email: user._profile.email,
-        timezone: '',
-        preferredLanguages: '',
-        token: user._token.accessToken,
+        email: user._profile.email
+        //timezone: '',
+        //preferredLanguages: '',
+        //token: user._token.accessToken,
       };
     
     dispatch(loginUserRequest())
       client.login(newUser)
-      .then((resp) => { dispatch(loginUserSuccess(resp)) }) //
+      .then((resp) => {
+        if (resp.redirect !== true){
+          client.redirectCMS(resp)
+          .then((resp) => { console.log(resp); })
+          .catch((err) => { console.log(err); })
+          //console.log(resp);
+        }else{
+          dispatch(loginUserSuccess(resp)) 
+        }
+      }) //
       //.catch((err) => { dispatch(savePeopleFailure(err)) })
     //})
   }
@@ -50,8 +60,20 @@ export function saveProfile (profile) {
   return function (dispatch) {    
       dispatch(saveProfileRequest())
       client.saveProfile(profile)
-      .then((resp) => { dispatch(saveProfileSuccess(resp)) })
+      .then((resp) => {
+        /*client.uploadCV(cv)
+        .then((resp) => { */
+          dispatch(saveProfileSuccess(resp)) 
+        /*});*/
+      })
       .catch((err) => { dispatch(saveProfileFailure(err)) })
+  }
+}
+
+export function redirectCMS (user) {
+  console.log(user);
+  return function (dispatch) {    
+      
   }
 }
 

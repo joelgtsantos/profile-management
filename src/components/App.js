@@ -4,7 +4,7 @@ import { connect, Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { reducer }  from '../redux-components/redux-reducer';
-import { login, saveProfile }  from '../redux-components/redux-actions';
+import { login, saveProfile, redirectCMS }  from '../redux-components/redux-actions';
 import TopBar from './TopBar';
 import PrivateRoute from './PrivateRoute';
 import Login from './Login';
@@ -24,7 +24,7 @@ const App = () => (
       <div className='spacer row' />
       <div className='row'>
         <Switch>
-          <PrivateRoute path='/profile' component={RdxProfile} />
+          <PrivateRoute path='/profile' component={RdxProfile} user={store.getState().user}/>
           <Route path='/login' component={RdxLogin} />
           <Route exact path='/' render={() => (
             <Redirect
