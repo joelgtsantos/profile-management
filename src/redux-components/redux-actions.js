@@ -39,18 +39,21 @@ export function login (user) {
         //token: user._token.accessToken,
       };
     
-    dispatch(loginUserRequest())
+    // dispatch(loginUserRequest())
+    // client.token = "asdfa";
+    // dispatch(loginUserSuccess()) 
+    //return {};
       client.login(newUser)
       .then((resp) => {
-        if (resp.redirect !== true){
+        //if (resp.redirect !== true){
           client.redirectCMS(resp)
-          .then((resp) => { console.log(resp); })
+          .then((resp) => { dispatch(loginUserSuccess(resp)); })
           .catch((err) => { console.log(err); })
           //console.log(resp);
-        }else{
-          dispatch(loginUserSuccess(resp)) 
-        }
-      }) //
+        //}else{
+          
+        //}
+      }); //
       //.catch((err) => { dispatch(savePeopleFailure(err)) })
     //})
   }
@@ -63,7 +66,7 @@ export function saveProfile (profile) {
       .then((resp) => {
         /*client.uploadCV(cv)
         .then((resp) => { */
-          dispatch(saveProfileSuccess(resp)) 
+          dispatch(saveProfileSuccess()) 
         /*});*/
       })
       .catch((err) => { dispatch(saveProfileFailure(err)) })

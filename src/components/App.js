@@ -24,7 +24,7 @@ const App = () => (
       <div className='spacer row' />
       <div className='row'>
         <Switch>
-          <PrivateRoute path='/profile' component={RdxProfile} user={store.getState().user}/>
+          <PrivateRoute path='/profile' component={RdxProfile}/>
           <Route path='/login' component={RdxLogin} />
           <Route exact path='/' render={() => (
             <Redirect

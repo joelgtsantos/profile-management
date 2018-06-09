@@ -3,8 +3,6 @@ import { Redirect } from 'react-router-dom';
 import { client } from '../Client';
 import SocialButton from './LoginButton';
 
-
-
 class Login extends Component {
 
   redirectPath = () => {
@@ -18,19 +16,6 @@ class Login extends Component {
 
   handleSocialLogin = (userApi) => {
      this.props.onSubmit(userApi);
-    /*
-      t {_provider: "google", _profile: {…}, _token: {…}}
-        _profile
-        :
-        {id: "117633623171650767683", name: "Joel Santos", firstName: "Joel", lastName: "Santos", email: "alekspunx@gmail.com", …}
-        _provider
-        :
-        "google"
-        _token
-        :
-        {accessToken: "ya29.GlupBfgK5kEey8tdCicMy2pzyMNjYCFmCclEKBPhBLaM0…MGz_9Td4qyuczKpDo0XqD62kH4AVllRSPRzlgz9-o7_EUdVFx", idToken: "eyJhbGciOiJSUzI1NiIsImtpZCI6ImFmZmM2MjkwN2E0NDYxOD…Qd-9Iexn6e_aKFiY-6B_Odrh3ME6YyPgIQ_-3p3FeHOOyiCLg", scope: "https://www.googleapis.com/auth/userinfo.email htt….googleapis.com/auth/plus.me openid email profile", expiresIn: 3600, firstIssued_at: 1524771790103, …}
-        profile
-    */
   };
 
   handleSocialLoginFailure = (err) => {
@@ -50,9 +35,7 @@ class Login extends Component {
               className='ui raised very padded text container segment'
               style={{ textAlign: 'center' }}
             >
-              <h2 className='ui green header'>
-                
-              </h2>
+              <h2 className='ui green header'></h2>
               {
                 this.props.loginInProgress ? (
                   <div className='ui active centered inline loader' />

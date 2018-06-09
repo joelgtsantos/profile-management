@@ -12,7 +12,6 @@ const TopBar = () => (
     <div className='item'>
       <h1
         className='ui green header'
-        style={{ marginTop: '10px' }}
       >
         Fullstack Music
       </h1>

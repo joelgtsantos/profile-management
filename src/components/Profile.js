@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
-import { client }  from '../Client';
 import InputFile from './InputFile';
 import '../style/Profile.css';
 import {
   Form, Input, Checkbox, File
 } from 'formsy-semantic-ui-react';
+import { Button, Modal } from 'semantic-ui-react';
 
 class Profile extends Component {
     state = {
-        formIsValid: false,
-        fields:{
-            study: '',
-            work: '',
-            wantWork: false,
-            cv: '',
-            name: null,
-        }
+      formIsValid: false,
+      open: false,
+      fields:{
+          study: '',
+          work: '',
+          wantWork: false,
+          cv: '',
+          name: null,
+      }
     }
      
     submit = (data) => {
@@ -24,7 +25,6 @@ class Profile extends Component {
         //const cv = {fileName: this.state.fields.fileName, file: this.state.fields.file};
         person.cv = this.state.fields.cv;
         person.name = this.state.fields.name;
-        console.log(person);
         this.props.onSubmit(person);
         //this.form.reset();//.form.reset();
     };
@@ -43,10 +43,13 @@ class Profile extends Component {
         fields['name'] = fileName;
 
         this.setState({fields});
-        console.log(this.state);
     };
 
+    close = () => this.setState({ open: false });
+
     render(){
+        let status = this.props.saveStatus;
+        if (status === 'SUCCESS') status = 'READY';
 
         return(
             <div className='ui container'>
@@ -79,6 +82,15 @@ class Profile extends Component {
                     </div>
                     <button type='submit' disabled={!this.state.formIsValid} className='ui button'>Submit</button>
                 </Form>
+                <Modal
+                  open={this.state.open}
+                  onClose={this.close}
+                  header='Success!'
+                  content='Profile updated!.'
+                  actions={[                    
+                    { key: 'done', content: 'Done', positive: true },
+                  ]}
+                />
             </div>
         );
     }

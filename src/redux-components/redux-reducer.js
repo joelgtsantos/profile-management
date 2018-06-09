@@ -4,7 +4,6 @@ import {
 } from './redux-actions.js';
 
 const initialState = {
-  isLoading: false,
   saveStatus: 'READY',
   loginInProgress: false,
   shouldRedirect: false,

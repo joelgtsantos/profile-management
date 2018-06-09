@@ -1,9 +1,26 @@
+import Profile from './components/Profile';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+import { shallow } from 'enzyme';
+import client from './Client';
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
+jest.mock('./Client');
+
+describe('App', () => {
+  let wrapper;
+  const onSubmit = jest.fn(); 
+
+  beforeEach(() => {
+    wrapper = shallow(
+      <Profile 
+        onSubmit={onSubmit}
+      />
+    );
+  });
+
+  it('should have a `submit button`', () => {
+    expect(
+     wrapper.contains(<button type='submit' disabled={true} className='ui button'>Submit</button>)
+    ).toBe(true);
+  });
+
 });
