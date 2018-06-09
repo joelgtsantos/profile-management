@@ -1,0 +1,10 @@
+@media only screen and (min-width: 1200px){
+.ui.container {
+    width: 500px !important;
+  }
+}
+
+.ui.modal {
+    width: 400px !important;
+    margin: 0 auto !important;
+}
